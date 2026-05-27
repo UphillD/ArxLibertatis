@@ -495,10 +495,10 @@ if(NOT ARX_HAVE_SDL AND (NOT WITH_SDL OR WITH_SDL EQUAL 1))
 	endif(SDL_FOUND)
 endif()
 
-# Boost
+# Boost: use CMake's FindBoost compatibility path on Windows because ArxWindows
+# and some package-manager layouts provide headers/libraries without BoostConfig.cmake.
 macro(arx_find_boost)
-	# ArxWindows and some package-manager dependency layouts provide Boost headers/libraries without BoostConfig.cmake.
-	if(POLICY CMP0167)
+	if(WIN32 AND POLICY CMP0167)
 		cmake_policy(PUSH)
 		cmake_policy(SET CMP0167 OLD)
 		find_package(Boost ${ARGV})
